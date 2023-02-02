@@ -4,14 +4,29 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 ## Available Scripts
 
-In the project directory, you can run:
+In the default project directory, you can run:
 
 ### `npm start`
 
-Runs the app in the development mode.\
+Runs the frontend of application in the development mode.\
 Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 
 The page will reload when you make changes.\
+You may also see any lint errors in the console.
+
+In the project directory "backend" located at "./src/components/backend", you can run:
+
+### `node <file_name>`
+### `node backend.js`
+
+Runs the backend of application in the development mode.\
+Open [http://localhost:5000](http://localhost:5000) to view it in your browser.
+
+If you have nodemon installed, you can also run
+### `nodemon <file_name>`
+### `nodemon backend.js`
+
+If you run server using nodemon, the page will reload when you make changes.\
 You may also see any lint errors in the console.
 
 ### `npm test`
