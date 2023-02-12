@@ -8,7 +8,7 @@ function App() {
   return (
     <div className="root">
       <div className="App">
-        <Main />
+        {/* <Main /> */}
         <div className="login-division">
           <section className="login">
             <Login />

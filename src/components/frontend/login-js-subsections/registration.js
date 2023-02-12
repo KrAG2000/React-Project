@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { createUserWithEmailAndPassword, onAuthStateChanged } from 'firebase/auth';
 import { auth } from "../../firebase-backend/firebase-backend";
 import './registration.css';
 
@@ -11,19 +11,24 @@ function Login() {
     const [registerPassword, setRegisterPassword] = useState("");
     const [signInEmail, setSignInEmail] = useState("");
     const [signInPassword, setSignInPassword] = useState("");
-
-
+    const [user, setUser] = useState({});
     const [form, setForm] = useState({
-        name: "",
-        position: ""
+        fname: "",
+        lname: "",
+        email: "",
+        password: ""
     });
 
+    onAuthStateChanged(auth, (currentUser) => {
+        setUser(currentUser);
+    })
+
     const navigate = useNavigate();
-    function updateForm(value) {
-        return setForm((prev) => {
-            return { ...prev, ...value };
-        });
-    }
+    // function updateForm(value) {
+    //     return setForm((prev) => {
+    //         return { ...prev, ...value };
+    //     });
+    // }
 
 
     // **********register function**********
@@ -45,7 +50,7 @@ function Login() {
                 return;
             });
 
-        setForm({ name: "", position: "" });
+        // setForm({ name: "", position: "" });
         navigate("/");
 
         try {
@@ -95,9 +100,9 @@ function Login() {
                     <input
                         type="text"
                         name="fname"
+                        className="input-email"
                         placeholder="First name"
-                        value={form.fname}
-                        onChange={(e) => updateForm({ fname: e.target.value })}
+                        onChange={(event) => (event.target.value)}
                     // onChange={(event) => {
                     //     setRegisterEmail(event.target.value);
                     // }}
@@ -108,9 +113,9 @@ function Login() {
                     <input
                         type="text"
                         name="lname"
+                        className="input-email"
                         placeholder="Last name"
-                        value={form.lname}
-                        onChange={(e) => updateForm({ lname: e.target.value })}
+                        onChange={(event) => ( event.target.value )}
                     // onChange={(event) => {
                     //     setRegisterEmail(event.target.value);
                     // }}
@@ -121,6 +126,7 @@ function Login() {
                     <input
                         type="email"
                         name="email"
+                        className="input-email"
                         placeholder="E-mail address"
                         onChange={(event) => {
                             setRegisterEmail(event.target.value);
@@ -130,9 +136,9 @@ function Login() {
                 <div className="sect2">
                     <label htmlFor="password" className="label">Password</label>
                     <input
-                        className="input-email"
                         type="password"
                         name="password"
+                        className="input-email"
                         placeholder="Rogue-able password"
                         onChange={(event) => {
                             setRegisterPassword(event.target.value);
@@ -151,6 +157,7 @@ function Login() {
                     <p className="sub-card-footer-2" onClick={register}><strong>Next</strong></p>
                 </div>
             </div>
+            <section>{user.email}</section>
         </>
     );
 }
