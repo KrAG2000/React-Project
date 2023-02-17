@@ -5,12 +5,16 @@
     padding: 5%;
     /* max-height: 75vh; */
     /* box-shadow: 0 0 5px black; */
+    /* border: 1px solid rgb(255, 14, 54); */
+
 }
 
 .card-body{
     flex: none;
     margin-top: 1rem;
     margin-bottom: 1rem;
+    /* border: 1px solid rgb(255, 14, 54); */
+
 }
 
 .google-heading{
@@ -22,29 +26,40 @@
 #o2{color: rgb(255, 213, 0);}
 #l{color: green;}
 
+.BD-sect{
+    display: flex;
+    justify-content: space-between;
+}
+
 .sect2{
     position: relative;
+    /* border: 1px solid rgb(255, 14, 54); */
+
 }
 
 .label{
     position: absolute;
     top: -0.5rem;
-    left: 5%;
+    left: 5%; /* 5% */
     font-size: small;
     z-index: 1;
     background-color: white;
     color: rgb(0, 115, 255);
     padding-left: 3px;
     padding-right: 3px;
+    /* border: 1px solid rgb(255, 14, 54); */
+
 }
 
-input[type=email], input[type=password], input[type=text]{
+.reg-input-text, .reg-input-email, .reg-input-password{
     padding: 1rem;
     border: 2px solid rgb(0, 115, 255);
     border-radius: 4px;
     height: 3.5rem;
     width: 100%;
     margin-bottom: 1rem;
+    /* border: 1px solid rgb(255, 14, 54); */
+
 }
 
 .forgot{
@@ -52,6 +67,8 @@ input[type=email], input[type=password], input[type=text]{
     color: rgb(0, 115, 255);
     font-size: medium;
     font-weight: 500;
+    /* border: 1px solid rgb(255, 14, 54); */
+
 }
 
 .grid{
@@ -62,6 +79,8 @@ input[type=email], input[type=password], input[type=text]{
     align-items: center;
     margin-top: 1rem;
     padding: 1rem;
+    /* border: 1px solid rgb(255, 14, 54); */
+
     /* border: 2px solid red; */
 }
 
@@ -73,12 +92,16 @@ input[type=email], input[type=password], input[type=text]{
     border: none; */
     margin-top: 2rem;
     /* border: 2px solid red; */
+    /* border: 1px solid rgb(255, 14, 54); */
+
 }
 
 .sub-card-footer{
     font-weight: bold;
     font-size: 1.1rem;
     color: rgb(0, 119, 255);
+    /* border: 1px solid rgb(255, 14, 54); */
+
     /* border: 2px solid red; */
 }
 
@@ -95,6 +118,18 @@ input[type=email], input[type=password], input[type=text]{
     /* border: 2px solid red; */
 }
 
+.sub-card-footer-2:active{
+    font-size: 1.1rem;
+    color: white;
+    background-color: rgb(145, 0, 0);
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    border-radius: 4px;
+    cursor: pointer;
+    /* border: 2px solid red; */
+}
 
 .extra{
     display: flex;

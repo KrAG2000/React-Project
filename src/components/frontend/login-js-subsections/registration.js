@@ -1,111 +1,123 @@
 import React, { useState } from "react";
-import { createUserWithEmailAndPassword, onAuthStateChanged } from 'firebase/auth';
-import { auth } from "../../firebase-backend/firebase-backend";
+import {
+    createUserWithEmailAndPassword,
+    onAuthStateChanged
+} from 'firebase/auth';
 import './registration.css';
+import { auth } from "../../firebase-backend/firebase-backend";
 
-import { useNavigate } from "react-router";
+import { redirect } from "react-router"; // Better than "useNavigate"
 
-function Login() {
+function Registration() {
 
+    const [basicDetails, setBasicDetails] = useState({
+        firstName: "",
+        lastName: "",
+        dateOfBirth: {
+            date: "",
+            month: "",
+            year: ""
+        }
+    })
     const [registerEmail, setRegisterEmail] = useState("");
     const [registerPassword, setRegisterPassword] = useState("");
-    const [signInEmail, setSignInEmail] = useState("");
-    const [signInPassword, setSignInPassword] = useState("");
-    const [user, setUser] = useState({});
-    const [form, setForm] = useState({
-        fname: "",
-        lname: "",
+    /*
+    const [registration, setRegistration] = useState({
         email: "",
         password: ""
-    });
+    })
+    */
+    const [user, setUser] = useState({});
 
     onAuthStateChanged(auth, (currentUser) => {
         setUser(currentUser);
+        console.log(`User: `, currentUser);
+        return;
     })
 
-    const navigate = useNavigate();
-    // function updateForm(value) {
-    //     return setForm((prev) => {
-    //         return { ...prev, ...value };
-    //     });
-    // }
-
+    function updateDetails(value) {
+        return setBasicDetails((prev) => {
+            return { ...prev, ...value };
+        });
+    }
 
     // **********register function**********
-    const register = async (e) => {
-        e.preventDefault();
-
-        // When a post request is sent to the create url, we'll add a new record to the database.
-        const newPerson = { ...form };
-
-        await fetch("http://localhost:5000/record/add", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify(newPerson),
-        })
-            .catch(error => {
-                window.alert(error);
-                return;
-            });
-
-        // setForm({ name: "", position: "" });
-        navigate("/");
-
+    const register = async () => {
         try {
+
             const user = await createUserWithEmailAndPassword(
                 auth,
                 registerEmail,
                 registerPassword
             );
-            console.log(user);
+            /*
+            const user = await createUserWithEmailAndPassword(
+                auth,
+                registration.email,
+                registration.password
+            );
+            */
+            console.log("New User", user);
+
         }
         catch (error) {
-            console.log("Sorry", error.message);
+            console.log("Something is wrong with registration section of FIREBASE: ", error.message);
         }
+
+        /* 
+        e.preventDefault();
+    
+        // When a post request is sent to the create url, we'll add a new record to the database.
+        const newObject = { ...basicDetails };
+    
+        await fetch("http://localhost:5000/record/add", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(newObject),
+        })
+            .catch(error => {
+                console.log("Something is wrong with MONGO-DB section: ", error)
+                return;
+            });
+            
+        const navigate = useNavigate();    
+        navigate("/");
+        redirect("/");
+        */
     }
-
-    // **********signIn function**********    
-    const signIn = async () => {
-
-    }
-    // **********signOut function**********
-    const signOut = async () => {
-
-    }
-
-
 
     return (
-        <>
+        <div className="card" >
             {/* **********************Main card body********************* */}
-            <div className="card">
-                <div className="card-body">
-                    <span className="google-heading" id="G">G</span>
-                    <span className="google-heading" id="o1">o</span>
-                    <span className="google-heading" id="o2">o</span>
-                    <span className="google-heading" id="g">g</span>
-                    <span className="google-heading" id="l">l</span>
-                    <span className="google-heading" id="e">e</span>
-                    <h4 className="card-title">Sign in</h4>
-                    <p className="card-text">to continue to Gmail</p>
-                </div>
+            <div className="card-body">
+                <span className="google-heading" id="G">G</span>
+                <span className="google-heading" id="o1">o</span>
+                <span className="google-heading" id="o2">o</span>
+                <span className="google-heading" id="g">g</span>
+                <span className="google-heading" id="l">l</span>
+                <span className="google-heading" id="e">e</span>
+                <h4 className="card-title">Sign in</h4>
+                <p className="card-text">to continue to Gmail</p>
+            </div>
 
 
-                {/* **********************Registration section********************* */}
+            {/* **********************Registration section********************* */}
+            <div className="BD-sect">
+
                 <div className="sect2">
-
                     <label htmlFor="fname" className="label">First Name</label>
                     <input
                         type="text"
                         name="fname"
-                        className="input-email"
+                        className="reg-input-text"
                         placeholder="First name"
-                        onChange={(event) => (event.target.value)}
-                    // onChange={(event) => {
-                    //     setRegisterEmail(event.target.value);
-                    // }}
+                        onChange={(event) => {
+                            updateDetails({
+                                firstName: event.target.value
+                            });
+                        }}
                     />
                 </div>
                 <div className="sect2">
@@ -113,56 +125,67 @@ function Login() {
                     <input
                         type="text"
                         name="lname"
-                        className="input-email"
+                        className="reg-input-text"
                         placeholder="Last name"
-                        onChange={(event) => ( event.target.value )}
-                    // onChange={(event) => {
-                    //     setRegisterEmail(event.target.value);
-                    // }}
-                    />
-                </div>
-                <div className="sect2">
-                    <label htmlFor="email" className="label">Email or phone</label>
-                    <input
-                        type="email"
-                        name="email"
-                        className="input-email"
-                        placeholder="E-mail address"
                         onChange={(event) => {
-                            setRegisterEmail(event.target.value);
+                            updateDetails({
+                                lastName: event.target.value
+                            });
                         }}
                     />
-                </div>
-                <div className="sect2">
-                    <label htmlFor="password" className="label">Password</label>
-                    <input
-                        type="password"
-                        name="password"
-                        className="input-email"
-                        placeholder="Rogue-able password"
-                        onChange={(event) => {
-                            setRegisterPassword(event.target.value);
-                        }}
-                    />
-                </div>
-                {/* **********************Extra info/recovery section********************* */}
-                <p className="forgot">Forgot email?</p>
-                <span className="bottom">Not your computer? Use a private window to sign in.
-                    <strong className="pre-footer"> Learn more</strong>
-                </span>
-
-
-                <div className="card-footers">
-                    <p className="sub-card-footer">Create account</p>
-                    <p className="sub-card-footer-2" onClick={register}><strong>Next</strong></p>
                 </div>
             </div>
-            <section>{user.email}</section>
-        </>
+            <div className="sect2">
+                <label htmlFor="email" className="label">Email or phone</label>
+                <input
+                    type="email"
+                    name="email"
+                    className="reg-input-email"
+                    placeholder="E-mail address"
+                    onChange={(event) => {
+                        setRegisterEmail(event.target.value);
+                        /*
+                        setRegistration({
+                            email: event.target.value
+                        });
+                        */
+                    }}
+                />
+            </div>
+            <div className="sect2">
+                <label htmlFor="password" className="label">Password</label>
+                <input
+                    type="password"
+                    name="password"
+                    className="reg-input-password"
+                    placeholder="Strong password"
+                    onChange={(event) => {
+                        setRegisterPassword(event.target.value);
+                        /*
+                        setRegistration({
+                            password: event.target.value
+                        });
+                        */
+                    }}
+                />
+            </div>
+            {/* **********************Extra info/recovery section********************* */}
+            <a href="https://wa.me" className="forgot">Forgot email?</a>
+            <span className="bottom">Not your computer? Use a private window to sign in.
+                <strong className="pre-footer"> Learn more</strong>
+            </span>
+
+
+            <div className="card-footers">
+                <a href="https://www.yahoo.com" className="sub-card-footer">Create account</a>
+                <p className="sub-card-footer-2" onClick={register}>Next</p>
+            </div>
+            {/* <section>{user.email}</section> */}
+        </div >
     );
 }
 
-export default Login;
+export default Registration;
 
 // ****************************************
 // REGISTRATION EMAIL IN MAIN SECTION ABOVE
@@ -173,7 +196,7 @@ export default Login;
 REGISTRATION PASSWORD
     <label for="password" className="label">Password</label>
     <input
-        className="input-email"
+        className="reg-input-email"
         type="password"
         name="password"
         placeholder="REG PASSWORD"
@@ -185,7 +208,7 @@ REGISTRATION PASSWORD
 SIGN IN EMAIL
     <label for="email-SI" className="label">Email or phone</label>
     <input
-        className="input-email"
+        className="reg-input-email"
         type="email"
         name="email-SI"
         placeholder="SIGN IN EMAIL"
@@ -197,7 +220,7 @@ SIGN IN EMAIL
 SIGN IN PASSWORD
     <label for="password-SI" className="label">Password</label>
     <input
-        className="input-email"
+        className="reg-input-email"
         type="password"
         name="password-SI"
         placeholder="SIGN IN PASSWORD"

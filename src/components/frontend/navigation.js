@@ -1,5 +1,5 @@
 import React from "react";
-import logo from "./logo-gmail.png";
+import logo from "./Images/logo-gmail.png";
 import "./navigation.css";
 
 function Pgno1() {

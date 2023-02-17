@@ -1,0 +1,11 @@
+.fp-div{
+    width: 100%;
+}
+
+.login{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    /* border: 1px solid red; */
+}
